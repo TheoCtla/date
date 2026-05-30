@@ -44,7 +44,7 @@ export const questions: Question[] = [
       { value: 'Ciné' },
       { value: 'Couché de soleil' },
       { value: 'Bowling' },
-      { value: 'Escapte game' },
+      { value: 'Escape game' },
       { value: 'Salle d\'arcade' },
       { value: 'Autre' },
     ],

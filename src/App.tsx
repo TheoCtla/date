@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { questions } from './data'
-import Knights from './components/Knights'
 import IntroCard from './components/IntroCard'
 import QuestionStep from './components/QuestionStep'
 import Recap from './components/Recap'
@@ -37,8 +36,6 @@ export default function App() {
 
   return (
     <div className="app">
-      <Knights />
-
       <main className="stage">
         {step === -1 && <IntroCard onYes={() => setStep(0)} />}
 
