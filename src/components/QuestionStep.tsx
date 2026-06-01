@@ -1,16 +1,8 @@
 import { useState } from 'react'
 import type { Question } from '../data'
 import { formatFrenchDate, formatFrenchTime, OTHER_OPTION } from '../data'
-
-// Ouvre le sélecteur natif (date/heure) au clic n'importe où sur le champ
-function openPicker(e: React.MouseEvent<HTMLInputElement>) {
-  const input = e.currentTarget as HTMLInputElement & { showPicker?: () => void }
-  try {
-    input.showPicker?.()
-  } catch {
-    // showPicker() peut échouer selon le navigateur : on ignore sans casser
-  }
-}
+import DatePicker from './DatePicker'
+import TimePicker from './TimePicker'
 
 // Date du jour au format YYYY-MM-DD (pour empêcher de choisir une date passée)
 const today = new Date()
@@ -52,7 +44,7 @@ export default function QuestionStep({
   const [otherText, setOtherText] = useState(initialOther ? selected ?? '' : '')
 
   const placeholder =
-    question.key === 'repas' ? 'Écris ce que tu veux manger…' : 'Écris ce que tu veux faire…'
+    question.key === 'repas' ? 'Tu veux manger quoi ?' : 'Tu veux faire quoi ?'
 
   const selectPreset = (value: string) => {
     setOtherActive(false)
@@ -83,25 +75,12 @@ export default function QuestionStep({
 
       {question.input === 'date' ? (
         <div className="date-picker">
-          <input
-            type="date"
-            className="date-input"
-            min={todayIso}
-            value={selected ?? ''}
-            onChange={(e) => onSelect(e.target.value, false)}
-            onClick={openPicker}
-          />
+          <DatePicker value={selected} min={todayIso} onChange={(v) => onSelect(v, false)} />
           {selected && <p className="date-chosen">{formatFrenchDate(selected)}</p>}
         </div>
       ) : question.input === 'time' ? (
         <div className="date-picker">
-          <input
-            type="time"
-            className="date-input"
-            value={selected ?? ''}
-            onChange={(e) => onSelect(e.target.value, false)}
-            onClick={openPicker}
-          />
+          <TimePicker value={selected} onChange={(v) => onSelect(v, false)} />
           {selected && <p className="date-chosen">{formatFrenchTime(selected)}</p>}
         </div>
       ) : (

@@ -17,7 +17,7 @@ export default function Recap({ answers, onRestart }: Props) {
   return (
     <div className="card recap-card">
       <img src={knightFlowers} alt="Chevalier qui offre des fleurs" className="recap-banner" />
-      <h2 className="recap-title">Rendez-vous confirmé !</h2>
+      <h2 className="recap-title">La frappe, ptit recap note bien :</h2>
 
       <ul className="recap-list">
         <li>
@@ -37,15 +37,6 @@ export default function Recap({ answers, onRestart }: Props) {
           <strong>{answers.activite}</strong>
         </li>
       </ul>
-
-      <p className="recap-message">
-        Je passerai te récupérer le <strong>{formatFrenchDate(answers.jour)}</strong> à{' '}
-        <strong>{formatFrenchTime(answers.heure)}</strong>. On ira manger {' '}
-        <strong>{answers.repas?.toLowerCase()}</strong> et ensuite ce sera{' '}
-        <strong>{answers.activite?.toLowerCase()}</strong>.
-        <br />
-        Hâte de te voir mon coeur
-      </p>
 
       <button className="btn btn--ghost" onClick={onRestart}>
         Recommencer

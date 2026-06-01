@@ -13,14 +13,14 @@ export type Question = {
 export const questions: Question[] = [
   {
     key: 'jour',
-    title: 'On se voit quel jour ?',
-    subtitle: 'Choisis le grand jour de notre rendez-vous',
+    title: 'Quand ?',
+    subtitle: '',
     input: 'date',
   },
   {
     key: 'heure',
     title: 'À quelle heure ?',
-    subtitle: 'Je serai à l\'heure, promis (presque)',
+    subtitle: '',
     input: 'time',
   },
   {
@@ -32,20 +32,20 @@ export const questions: Question[] = [
       { value: 'Ramen' },
       { value: 'Sushis' },
       { value: 'Burger' },
-      { value: 'Crêpes' },
+      { value: 'Surprise' },
       { value: 'Autre' }
     ],
   },
   {
     key: 'activite',
     title: 'On fait quoi ensuite ?',
-    subtitle: 'Pour prolonger la soirée ensemble',
+    subtitle: '',
     options: [
       { value: 'Ciné' },
       { value: 'Couché de soleil' },
       { value: 'Bowling' },
       { value: 'Escape game' },
-      { value: 'Salle d\'arcade' },
+      { value: 'Plage' },
       { value: 'Autre' },
     ],
   },

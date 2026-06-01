@@ -30,13 +30,14 @@ export default function IntroCard({ onYes }: Props) {
   }
 
   const teaseMessages = [
-    'Non',
+    'Jamais',
     'T\'es sûre ?',
     'Réessaie pour voir',
-    'Raté !',
-    'Jamais tu ne m\'auras',
+    'Raté',
+    'Tu ne m\'auras jamais',
     'Arrête',
     'Pitié',
+    'DIS OUI PITIÉ'
   ]
   const noLabel = teaseMessages[Math.min(dodges, teaseMessages.length - 1)]
 
@@ -55,12 +56,12 @@ export default function IntroCard({ onYes }: Props) {
         )}
       </div>
 
-      <h1 className="intro-title">Ptit date ?</h1>
+      <h1 className="intro-title">On se revoit quand ?</h1>
       <p className="intro-sub"></p>
 
       <div className="btn-row">
         <button className="btn btn--yes" onClick={onYes}>
-          Bien sûr mon amour
+          Le plus tôt possible
         </button>
 
         <button
