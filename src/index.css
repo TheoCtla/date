@@ -30,8 +30,8 @@ body {
 .app {
   min-height: 100vh;
   width: 100%;
-  /* image de fond unique, plein écran (couleur nuit en secours) */
-  background: var(--night) url('./assets/bg.png') center / cover no-repeat fixed;
+  /* image de fond plein écran, cadrée sur le couple (couleur nuit en secours) */
+  background: var(--night) url('./assets/bg.png') 58% center / cover no-repeat fixed;
   position: relative;
   overflow-x: hidden;
   display: flex;
@@ -136,7 +136,25 @@ body {
   color: var(--silver);
   border: 1px solid rgba(205, 211, 224, 0.35);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Emplacement réservé : le fantôme garde la place, le vrai bouton flotte par-dessus */
+.no-slot {
+  position: relative;
+  display: inline-flex;
+}
+.no-ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
+.no-real {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  z-index: 50;
+  /* déplacement un peu ralenti et fluide */
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .btn--ghost {
@@ -471,16 +489,49 @@ body {
 }
 .recap-message strong { color: var(--red); }
 
+/* ---------- Responsive ---------- */
+
+/* À partir des écrans moyens : card calée à gauche pour laisser voir le couple à droite */
+@media (min-width: 760px) {
+  .app {
+    justify-content: flex-start;
+    padding-left: clamp(16px, 4vw, 96px);
+  }
+  .stage {
+    max-width: 480px;
+  }
+}
+
+/* Grands écrans : un peu plus de respiration et une card un poil plus large */
+@media (min-width: 1200px) {
+  .app {
+    padding-left: clamp(40px, 6vw, 150px);
+  }
+  .stage {
+    max-width: 520px;
+  }
+}
+
+/* Petits écrans : card centrée, le couple transparaît derrière le verre */
+@media (max-width: 759px) {
+  .app {
+    /* background-attachment: fixed bugue sur mobile → on repasse en scroll */
+    background-attachment: scroll;
+    padding: 18px;
+  }
+}
+
 @media (max-width: 720px) {
   .card { padding: 28px 20px; }
   .options { gap: 10px; }
   .intro-title { font-size: 25px; }
 }
 
-/* Sur écran large : on décale la card vers la gauche pour laisser voir la femme à droite */
-@media (min-width: 880px) {
-  .app {
-    justify-content: flex-start;
-    padding-left: clamp(20px, 3.5vw, 80px);
-  }
+/* Très petits écrans : on resserre encore */
+@media (max-width: 400px) {
+  .gif-wrap { width: 180px; height: 180px; }
+  .intro-title { font-size: 23px; }
+  .q-title { font-size: 22px; }
+  .time-col { min-width: 78px; }
+  .btn { font-size: 16px; padding: 13px 18px; }
 }

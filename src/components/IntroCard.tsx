@@ -10,6 +10,9 @@ const CAT_GIF = 'https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif'
 export default function IntroCard({ onYes }: Props) {
   // Déplacement du bouton "Non" via translate (s'anime en douceur dès le 1er mouvement).
   const noRef = useRef<HTMLButtonElement>(null)
+  // Position "au repos" (sans translate), mesurée une seule fois pour rester fiable
+  // même si la souris re-survole pendant que le bouton glisse encore.
+  const baseRef = useRef<{ left: number; top: number } | null>(null)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
   const [dodges, setDodges] = useState(0)
   const [gifBroken, setGifBroken] = useState(false)
@@ -17,15 +20,18 @@ export default function IntroCard({ onYes }: Props) {
   const runAway = () => {
     const el = noRef.current
     if (!el) return
-    const rect = el.getBoundingClientRect()
-    // Position du bouton "au repos" (sans translate), pour calculer le nouveau décalage.
-    const baseLeft = rect.left - offset.x
-    const baseTop = rect.top - offset.y
+    // On capture la position de départ au 1er passage (offset encore à 0,0).
+    if (!baseRef.current) {
+      const rect = el.getBoundingClientRect()
+      baseRef.current = { left: rect.left - offset.x, top: rect.top - offset.y }
+    }
+    const w = el.offsetWidth
+    const h = el.offsetHeight
     const margin = 14
-    // Cible aléatoire qui reste dans la fenêtre, le bouton devient insaisissable
-    const targetLeft = margin + Math.random() * Math.max(window.innerWidth - rect.width - margin * 2, 0)
-    const targetTop = margin + Math.random() * Math.max(window.innerHeight - rect.height - margin * 2, 0)
-    setOffset({ x: targetLeft - baseLeft, y: targetTop - baseTop })
+    // Cible aléatoire toujours entièrement dans la fenêtre, le bouton reste insaisissable.
+    const targetLeft = margin + Math.random() * Math.max(window.innerWidth - w - margin * 2, 0)
+    const targetTop = margin + Math.random() * Math.max(window.innerHeight - h - margin * 2, 0)
+    setOffset({ x: targetLeft - baseRef.current.left, y: targetTop - baseRef.current.top })
     setDodges((d) => d + 1)
   }
 
@@ -64,20 +70,22 @@ export default function IntroCard({ onYes }: Props) {
           Le plus tôt possible
         </button>
 
-        <button
-          ref={noRef}
-          className="btn btn--no"
-          style={{
-            transform: `translate(${offset.x}px, ${offset.y}px)`,
-            position: 'relative',
-            zIndex: 50,
-          }}
-          onMouseEnter={runAway}
-          onTouchStart={runAway}
-          onClick={runAway}
-        >
-          {noLabel}
-        </button>
+        <span className="no-slot">
+          {/* fantôme invisible qui réserve une place fixe → le bouton "oui" ne bouge plus */}
+          <span className="btn btn--no no-ghost" aria-hidden="true">
+            Non
+          </span>
+          <button
+            ref={noRef}
+            className="btn btn--no no-real"
+            style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
+            onMouseEnter={runAway}
+            onTouchStart={runAway}
+            onClick={runAway}
+          >
+            {noLabel}
+          </button>
+        </span>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { questions } from './data'
+import { sendRecapEmail } from './email'
 import IntroCard from './components/IntroCard'
 import QuestionStep from './components/QuestionStep'
 import Recap from './components/Recap'
@@ -29,6 +30,12 @@ export default function App() {
     }
   }
 
+  // Fin du questionnaire : on envoie le mail récap puis on affiche le récap
+  const finish = () => {
+    sendRecapEmail(answers)
+    setStep(goRecap)
+  }
+
   const restart = () => {
     setAnswers({})
     setStep(-1)
@@ -50,7 +57,7 @@ export default function App() {
             onBack={() => setStep((s) => s - 1)}
             onNext={() => setStep((s) => s + 1)}
             isLast={step === questions.length - 1}
-            onFinish={() => setStep(goRecap)}
+            onFinish={finish}
           />
         )}
 

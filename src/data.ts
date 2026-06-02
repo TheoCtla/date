@@ -32,7 +32,7 @@ export const questions: Question[] = [
       { value: 'Ramen' },
       { value: 'Sushis' },
       { value: 'Burger' },
-      { value: 'Surprise' },
+      { value: 'Surprise hihi' },
       { value: 'Autre' }
     ],
   },

@@ -17,7 +17,7 @@ export default function Recap({ answers, onRestart }: Props) {
   return (
     <div className="card recap-card">
       <img src={knightFlowers} alt="Chevalier qui offre des fleurs" className="recap-banner" />
-      <h2 className="recap-title">La frappe, ptit recap note bien :</h2>
+      <h2 className="recap-title">La frappe, note bien :</h2>
 
       <ul className="recap-list">
         <li>
